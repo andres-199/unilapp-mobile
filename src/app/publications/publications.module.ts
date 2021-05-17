@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { PublicationsPage } from './publications.page';
 import { PublicationsPageRoutingModule } from './tab2-routing.module';
+import { ToolbarModule } from '../components/toolbar/toolbar.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { PublicationsPageRoutingModule } from './tab2-routing.module';
     CommonModule,
     FormsModule,
     PublicationsPageRoutingModule,
+    ToolbarModule,
   ],
   declarations: [PublicationsPage],
 })

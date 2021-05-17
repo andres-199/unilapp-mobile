@@ -1,5 +1,17 @@
 <ion-header [translucent]="true">
-  <app-toolbar></app-toolbar>
+  <app-toolbar title="INICIO"></app-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <img style="width: 100%" src="assets/img/logo.png" />
+  <ion-card *ngFor="let facultad of facultades">
+    <ion-item detail>
+      <ion-thumbnail slot="start">
+        <img [src]="facultad.imagen" />
+      </ion-thumbnail>
+      <ion-label color="primary" class="ion-text-wrap">
+        <h2>{{facultad.nombre}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>

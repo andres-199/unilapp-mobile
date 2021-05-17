@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Facultad } from '../interfaces/facultad.interface';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor() {}
+  facultades: Facultad[];
+  constructor(private homeservice: HomeService) {}
+
+  ionViewDidEnter() {
+    this.getFacultades();
+  }
+
+  private getFacultades() {
+    this.homeservice.facultades$.subscribe({
+      next: (facultades) => {
+        console.log(facultades);
+
+        this.facultades = facultades;
+      },
+    });
+  }
 }

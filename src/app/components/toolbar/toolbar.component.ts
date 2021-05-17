@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/login/user.service';
 
@@ -8,6 +8,7 @@ import { UserService } from 'src/app/login/user.service';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+  @Input() title = 'UNILAPP';
   constructor(private router: Router, public userService: UserService) {}
 
   ngOnInit() {}

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Persona } from './interfaces/persona.interface';
 import { Usuario } from './interfaces/usuario.interface';
 
 @Injectable({
@@ -32,5 +33,10 @@ export class UserService {
   public logout() {
     localStorage.removeItem('user');
     this.router.navigate(['']);
+  }
+
+  public register(persona: Persona) {
+    const url = environment.BACKEND_URL + 'personas';
+    return this.http.post(url, persona);
   }
 }

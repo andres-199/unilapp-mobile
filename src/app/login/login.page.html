@@ -1,9 +1,45 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content color="primary">
+  <div class="container">
+    <ion-card>
+      <img style="width: 100%" src="assets/img/logo.png" />
 
-<ion-content>
-
+      <ion-card-content>
+        <ng-container *ngIf="isLogin;else register">
+          <ion-item>
+            <ion-label position="floating">Correo Electrónico</ion-label>
+            <ion-input
+              type="text"
+              name="usuario"
+              [(ngModel)]="user.usuario"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input
+              type="password"
+              name="contrasena"
+              [(ngModel)]="user.contrasena"
+            ></ion-input>
+          </ion-item>
+          <ion-button
+            expand="block"
+            style="margin: 2em 0 1em 0"
+            (click)="onClickLogin()"
+          >
+            Iniciar Sesión
+          </ion-button>
+          <ion-button expand="block" fill="clear" (click)="isLogin=false">
+            Registrarse
+          </ion-button>
+        </ng-container>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
+
+<ng-template #register>
+  <app-register
+    (onCancel)="isLogin=true"
+    (onRegister)="user=$event; isLogin=true"
+  ></app-register>
+</ng-template>

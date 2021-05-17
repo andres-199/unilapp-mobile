@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-import { md5 } from 'md5';
+import { LoadingController, ToastController } from '@ionic/angular';
+import md5 from 'md5';
 import { UserService } from '../user.service';
 import { Usuario } from '../interfaces/usuario.interface';
 import { Persona } from '../interfaces/persona.interface';
@@ -19,7 +19,8 @@ export class RegisterComponent implements OnInit {
   persona: Persona = {};
   constructor(
     private toastController: ToastController,
-    private userService: UserService
+    private userService: UserService,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {}
@@ -48,16 +49,22 @@ export class RegisterComponent implements OnInit {
       contrasena: md5(this.password.psw1),
     };
 
-    this.register();
+    await this.register();
   }
 
-  private register() {
+  private async register() {
+    const loading = await this.loadingController.create({
+      message: 'Registrando...',
+    });
+    await loading.present();
+
     this.userService.register(this.persona).subscribe({
       next: async (response: BackendResponse) => {
         const usuario: Usuario = {
           usuario: this.persona.correo,
         };
 
+        await loading.dismiss();
         const toast = await this.toastController.create({
           message: response.message,
           duration: 5000,
@@ -72,6 +79,7 @@ export class RegisterComponent implements OnInit {
         this.onRegister.emit(usuario);
       },
       error: async (e) => {
+        await loading.dismiss();
         const toast = await this.toastController.create({
           message: e.error.message,
           duration: 3000,

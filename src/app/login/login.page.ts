@@ -4,6 +4,7 @@ import md5 from 'md5';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,8 +22,17 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {}
 
-  async onClickLogin() {
+  async onClickLogin(form: NgForm) {
     if (!this.user.usuario || !this.user.contrasena) {
+      return false;
+    }
+
+    if (form.invalid) {
+      const toast = await this.toastController.create({
+        message: 'Ingrese un correo valido ⚠',
+        duration: 3000,
+      });
+      await toast.present();
       return false;
     }
 
@@ -42,7 +52,8 @@ export class LoginPage implements OnInit {
       error: async (e) => {
         await loading.dismiss();
         const toast = await this.toastController.create({
-          message: e.error.message,
+          message:
+            'No es posible ingresar 😰, porfavor verifique la información e intente de nuevo.',
           duration: 3000,
         });
         await toast.present();

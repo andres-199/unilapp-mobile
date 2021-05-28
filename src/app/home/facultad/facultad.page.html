@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="onCLickBackButton()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{facultad?.nombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img class="img-facultad" [src]="facultad.imagen" />
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>
+          <ion-button expand="block" color="primary" size="default">
+            <ion-icon name="bag" slot="end"></ion-icon>
+            <ion-badge class="badge" color="medium" mode="ios">
+              {{facultad?.Productos?.length || 0}}
+            </ion-badge>
+            Productos
+          </ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button expand="block" color="secondary" size="default">
+            <ion-icon name="hammer" slot="end"></ion-icon>
+            <ion-badge class="badge" color="medium" mode="ios">
+              {{facultad?.Servicios?.length || 0}}
+            </ion-badge>
+            Servicios
+          </ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button expand="block" color="tertiary" size="default">
+            <ion-icon name="newspaper" slot="end"></ion-icon>
+            <ion-badge class="badge" color="medium" mode="ios">
+              {{facultad?.Empleos?.length || 0}}
+            </ion-badge>
+            Empleos
+          </ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

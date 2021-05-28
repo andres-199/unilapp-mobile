@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Facultad } from '../interfaces/facultad.interface';
+import { ModalController } from '@ionic/angular';
+import { Facultad } from './facultad/facultad.interface';
+import { FacultadPage } from './facultad/facultad.page';
 import { HomeService } from './home.service';
 
 @Component({
@@ -9,7 +11,10 @@ import { HomeService } from './home.service';
 })
 export class HomePage {
   facultades: Facultad[];
-  constructor(private homeservice: HomeService) {}
+  constructor(
+    private homeservice: HomeService,
+    private modalController: ModalController
+  ) {}
 
   ionViewDidEnter() {
     this.getFacultades();
@@ -18,10 +23,17 @@ export class HomePage {
   private getFacultades() {
     this.homeservice.facultades$.subscribe({
       next: (facultades) => {
-        console.log(facultades);
-
         this.facultades = facultades;
       },
     });
+  }
+
+  async onClickFacultad(facultad: Facultad) {
+    const modal = await this.modalController.create({
+      component: FacultadPage,
+      componentProps: { facultad },
+    });
+
+    await modal.present();
   }
 }

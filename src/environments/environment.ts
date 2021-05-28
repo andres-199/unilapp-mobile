@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //BACKEND_URL: 'http://localhost:3500/',
-  BACKEND_URL: 'https://unilapp.com:3500/',
+  BACKEND_URL: 'http://localhost:3500/',
+  //BACKEND_URL: 'https://unilapp.com:3500/',
 };
 
 /*

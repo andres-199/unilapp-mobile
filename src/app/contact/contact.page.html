@@ -3,5 +3,64 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <img style="width: 100%" src="assets/img/logo.png" />
+  <ion-card>
+    <img style="width: 100%" src="assets/img/logo.png" />
+    <ion-card-header>
+      <ion-card-subtitle>
+        <h6>
+          Tienes alguna duda, sugerencia?, o una ¡genial idea! Contactenos
+        </h6>
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-list lines="none">
+      <ng-container *ngFor="let contact of contacts">
+        <!--Email-->
+        <ion-item-sliding
+          #itemSlidingEmail
+          (click)="onClick(itemSlidingEmail)"
+          *ngIf="contact.email"
+        >
+          <ion-item detail>
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-label>{{contact.email}}</ion-label>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option
+              color="danger"
+              (click)="onClickEmail(contact.email)"
+            >
+              <ion-icon name="mail" slot="icon-only"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+        <!--Phone Number-->
+        <ion-item-sliding
+          #itemSlidingPhoneNumber
+          (click)="onClick(itemSlidingPhoneNumber)"
+          *ngIf="contact.number"
+        >
+          <ion-item detail>
+            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-label>{{contact.number}}</ion-label>
+          </ion-item>
+          <ion-item-options side="end" *ngIf="contact.call||contact.whatsapp">
+            <ion-item-option
+              color="success"
+              *ngIf="contact.whatsapp"
+              (click)="onClickWhatsapp(contact.whatsapp)"
+            >
+              <ion-icon name="logo-whatsapp" slot="icon-only"></ion-icon>
+            </ion-item-option>
+            <ion-item-option
+              *ngIf="contact.call"
+              (click)="onClickCall(contact.call)"
+            >
+              <ion-icon name="call" slot="icon-only"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ng-container>
+    </ion-list>
+  </ion-card>
 </ion-content>

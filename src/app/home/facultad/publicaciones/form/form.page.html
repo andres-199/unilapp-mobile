@@ -105,6 +105,15 @@
             (click)="showFullScreenImage(i)"
           >
             <div class="img-container">
+              <ion-fab vertical="top" horizontal="end" slot="fixed">
+                <ion-fab-button
+                  color="danger"
+                  size="small"
+                  (click)="onClickDeleteImage(imagen)"
+                >
+                  <ion-icon name="trash"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
               <img [src]="env.STORAGE+imagen.path" />
             </div>
           </ion-slide>

@@ -12,6 +12,7 @@ import { Facultad } from '../../facultad.interface';
 import { Publicacion } from '../publicacion.interface';
 import { PublicacionService } from '../publicacion.service';
 import { TipoPublicacion as TP } from 'src/app/interfaces/tipo-publicacion.interface';
+import { ImageUploadResponse } from 'src/app/interfaces/image-upload-response';
 
 export enum TipoPublicacion {
   EMPLEO = 1,
@@ -51,8 +52,6 @@ export class FormPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.publicacion);
-
     switch (this.tipoPublicacion) {
       case TipoPublicacion.EMPLEO:
         this.isEmpleo = true;
@@ -149,7 +148,7 @@ export class FormPage implements OnInit {
           this.publicacion.imagenes.push(...images);
 
           setTimeout(() => {
-            this.slides.slideNext();
+            this.slides.slideTo(this.publicacion.imagenes.length - 1);
           }, 50);
         }
 
@@ -176,5 +175,10 @@ export class FormPage implements OnInit {
       imagen['image'] = this.env.STORAGE + imagen.path;
       return imagen;
     });
+  }
+
+  onClickDeleteImage(imagen: ImageUploadResponse) {
+    const index = this.publicacion.imagenes.indexOf(imagen);
+    if (index >= 0) this.publicacion.imagenes.splice(index, 1);
   }
 }

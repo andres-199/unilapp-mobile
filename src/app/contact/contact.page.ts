@@ -25,7 +25,6 @@ export class ContactPage {
     this.contactService.getContactos.subscribe({
       next: (contacts) => {
         this.contacts = contacts;
-        console.log(contacts);
       },
     });
   }

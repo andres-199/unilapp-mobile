@@ -1,9 +1,213 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>form</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="onCLickBackButton()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Publicar {{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding-horizontal">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <ion-item class="ion-margin-vertical form" *ngIf="isProducto">
+      <ion-label position="stacked" class="ion-text-wrap"> Facultad </ion-label>
+      <ion-select
+        [(ngModel)]="publicacion.facultad_id"
+        [interfaceOptions]="{header:'Facultad'}"
+        [disabled]="!!facultad"
+        cancelText="Cancelar"
+        name="facultad_id"
+        interface="action-sheet"
+        required
+        *ngIf="facultades?.length"
+      >
+        <ion-select-option
+          [value]="facultad.id"
+          *ngFor="let facultad of facultades"
+        >
+          {{facultad.nombre}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
+    <ion-item class="ion-margin-vertical form" *ngIf="isProducto">
+      <ion-label position="stacked" class="ion-text-wrap">
+        Tipo de Publicación
+      </ion-label>
+      <ion-select
+        [(ngModel)]="publicacion.tipo_publicacion_id"
+        [interfaceOptions]="{header:'Tipo de Publicación'}"
+        [disabled]="!!tipoPublicacion"
+        cancelText="Cancelar"
+        name="tipo_publicacion_id"
+        required
+        *ngIf="tipoPublicaciones?.length"
+        interface="action-sheet"
+      >
+        <ion-select-option
+          [value]="tipoPublicacion.id"
+          *ngFor="let tipoPublicacion of tipoPublicaciones"
+        >
+          {{tipoPublicacion.nombre}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="ion-margin-vertical form" *ngIf="isProducto">
+      <ion-label position="stacked" class="ion-text-wrap">Titulo</ion-label>
+      <ion-input
+        type="text"
+        name="nombre"
+        required
+        [(ngModel)]="publicacion.nombre"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-vertical form" *ngIf="isProducto">
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-textarea
+        name="descripcion"
+        [autoGrow]="true"
+        rows="4"
+        [(ngModel)]="publicacion.descripcion"
+        required
+      ></ion-textarea>
+    </ion-item>
+
+    <!--imagenes-->
+    <ng-container *ngIf="isProducto">
+      <ion-item-divider>
+        <input
+          type="file"
+          name="foto"
+          required
+          accept="image/*"
+          hidden
+          #inputFile
+          (change)="onLoadPhoto($event)"
+        />
+        <ion-label> Imagenes </ion-label>
+
+        <ion-button slot="end" fill="clear" (click)="inputFile.click()">
+          <ion-icon name="images" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item-divider>
+
+      <ion-item class="ion-margin-vertical form">
+        <ion-slides
+          pager="true"
+          *ngIf="publicacion.imagenes.length; else noImage"
+        >
+          <ion-slide
+            *ngFor="let imagen of publicacion.imagenes;let i=index"
+            (click)="showFullScreenImage(i)"
+          >
+            <div class="img-container">
+              <img [src]="env.STORAGE+imagen.path" />
+            </div>
+          </ion-slide>
+        </ion-slides>
+      </ion-item>
+
+      <ng-template #noImage>
+        <div class="img-container">
+          <img
+            src="assets/img/add-image-icon.png"
+            (click)="inputFile.click()"
+          />
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ion-item class="ion-margin-vertical form" *ngIf="isProducto">
+      <ion-label position="stacked" class="ion-text-wrap">
+        Disponible para
+      </ion-label>
+      <ion-select
+        [(ngModel)]="publicacion.finalidad_id"
+        [interfaceOptions]="{header:'Disponible para:'}"
+        interface="action-sheet"
+        cancelText="Cancelar"
+        name="finalidad_id"
+        required
+      >
+        <ion-select-option
+          [value]="finalidad.id"
+          *ngFor="let finalidad of finalidades"
+        >
+          {{finalidad.nombre}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="ion-margin-vertical form" *ngIf="isProducto">
+      <ion-label position="stacked" class="ion-text-wrap"> Estado </ion-label>
+      <ion-select
+        [(ngModel)]="publicacion.estado_id"
+        [interfaceOptions]="{header:'Estado'}"
+        interface="action-sheet"
+        cancelText="Cancelar"
+        name="estado_id"
+        required
+      >
+        <ion-select-option [value]="estado.id" *ngFor="let estado of estados">
+          {{estado.nombre}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!--Contacto-->
+    <ng-container *ngIf="isProducto">
+      <ion-item-divider>
+        <ion-label> Información de Contacto </ion-label>
+      </ion-item-divider>
+
+      <ion-item class="ion-margin-vertical form">
+        <ion-icon name="mail" slot="start"></ion-icon>
+        <ion-input
+          type="text"
+          name="email"
+          [(ngModel)]="publicacion.contacto.email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-vertical form">
+        <ion-icon name="call" slot="start"></ion-icon>
+        <ion-input
+          type="text"
+          name="call"
+          [(ngModel)]="publicacion.contacto.call"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-vertical form">
+        <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        <ion-input
+          type="text"
+          name="whatsapp"
+          [(ngModel)]="publicacion.contacto.whatsapp"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-vertical form">
+        <ion-icon name="logo-facebook" slot="start"></ion-icon>
+        <ion-input
+          type="text"
+          name="facebook"
+          [(ngModel)]="publicacion.contacto.facebook"
+        ></ion-input>
+      </ion-item>
+    </ng-container>
+
+    <ion-button type="submit" expand="block">Publicar</ion-button>
+  </form>
 </ion-content>
+
+<ng-image-fullscreen-view
+  [images]="imagenes"
+  [imageIndex]="selectedImageIndex"
+  [show]="showFullScreen"
+  (close)="closeEventHandler()"
+></ng-image-fullscreen-view>

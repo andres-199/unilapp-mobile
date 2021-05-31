@@ -4,7 +4,6 @@ import { Facultad } from 'src/app/home/facultad/facultad.interface';
 import { FacultadService } from './facultad.service';
 import { Publicacion } from './publicaciones/publicacion.interface';
 import { PublicacionesPage } from './publicaciones/publicaciones.page';
-
 @Component({
   selector: 'app-facultad',
   templateUrl: './facultad.page.html',
@@ -24,8 +23,6 @@ export class FacultadPage implements OnInit {
   private getFacultad() {
     this.facultadService.getFacultad(this.facultad).subscribe({
       next: (facultad) => {
-        console.log(facultad);
-
         this.facultad = facultad;
       },
     });
@@ -38,7 +35,11 @@ export class FacultadPage implements OnInit {
   async onClickPublicaciones(publicaciones: Publicacion[], title: string) {
     const modal = await this.modalController.create({
       component: PublicacionesPage,
-      componentProps: { facultad: this.facultad.nombre, publicaciones, title },
+      componentProps: {
+        facultad: this.facultad,
+        publicaciones,
+        title,
+      },
     });
 
     await modal.present();

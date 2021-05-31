@@ -1,3 +1,5 @@
+import { Contacto } from 'src/app/interfaces/contacto.interface';
+import { ImageUploadResponse } from 'src/app/interfaces/image-upload-response';
 import { TipoPublicacion } from '../../../interfaces/tipo-publicacion.interface';
 
 export interface Publicacion {
@@ -6,8 +8,8 @@ export interface Publicacion {
   persona_id?: number;
   nombre?: string;
   descripcion?: string;
-  imagenes?: JSON;
-  contacto?: JSON;
+  imagenes?: ImageUploadResponse[];
+  contacto?: Contacto;
   estado_id?: number;
   finalidad_id?: number;
   facultad_id?: number;

@@ -65,4 +65,19 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --palette-color-4: #eeeeee;
+
+  form > ion-item.form {
+    --background: var(--palette-color-4);
+    --border-radius: 5px;
+  }
+
+  ion-item.form {
+    --border-color: var(--palette-color-4);
+  }
+
+  .bg-shadow {
+    --background: var(--palette-color-4);
+  }
 }

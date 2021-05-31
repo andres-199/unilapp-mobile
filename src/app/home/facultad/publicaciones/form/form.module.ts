@@ -4,17 +4,16 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FormPageRoutingModule } from './form-routing.module';
-
 import { FormPage } from './form.page';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FormPageRoutingModule
+    NgImageFullscreenViewModule,
   ],
-  declarations: [FormPage]
+  declarations: [FormPage],
 })
 export class FormPageModule {}

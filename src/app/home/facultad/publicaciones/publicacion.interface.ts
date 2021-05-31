@@ -1,4 +1,4 @@
-import { TipoPublicacion } from './tipo-publicacion.interface';
+import { TipoPublicacion } from '../../../interfaces/tipo-publicacion.interface';
 
 export interface Publicacion {
   id?: number;

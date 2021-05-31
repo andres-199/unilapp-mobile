@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { FacultadPage } from './facultad.page';
+import { PublicacionesPageModule } from './publicaciones/publicaciones.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, PublicacionesPageModule],
   declarations: [FacultadPage],
 })
 export class FacultadPageModule {}

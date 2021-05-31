@@ -15,7 +15,12 @@
     <ion-list lines="none">
       <ion-item>
         <ion-label>
-          <ion-button expand="block" color="primary" size="default">
+          <ion-button
+            expand="block"
+            color="primary"
+            size="default"
+            (click)="onClickPublicaciones(facultad.Productos,'Productos')"
+          >
             <ion-icon name="bag" slot="end"></ion-icon>
             <ion-badge class="badge" color="medium" mode="ios">
               {{facultad?.Productos?.length || 0}}
@@ -26,7 +31,12 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button expand="block" color="secondary" size="default">
+          <ion-button
+            expand="block"
+            color="secondary"
+            size="default"
+            (click)="onClickPublicaciones(facultad.Servicios,'Servicios')"
+          >
             <ion-icon name="hammer" slot="end"></ion-icon>
             <ion-badge class="badge" color="medium" mode="ios">
               {{facultad?.Servicios?.length || 0}}
@@ -37,7 +47,12 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button expand="block" color="tertiary" size="default">
+          <ion-button
+            expand="block"
+            color="tertiary"
+            size="default"
+            (click)="onClickPublicaciones(facultad.Empleos,'Empleos')"
+          >
             <ion-icon name="newspaper" slot="end"></ion-icon>
             <ion-badge class="badge" color="medium" mode="ios">
               {{facultad?.Empleos?.length || 0}}

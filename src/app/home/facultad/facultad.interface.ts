@@ -1,4 +1,4 @@
-import { Publicacion } from 'src/app/interfaces/publicacion.interface';
+import { Publicacion } from 'src/app/home/facultad/publicaciones/publicacion.interface';
 
 export interface Facultad {
   id?: number;

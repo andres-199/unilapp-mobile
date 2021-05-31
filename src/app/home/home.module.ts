@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HomePageRoutingModule } from './home-routing.module';
 import { HomePage } from './home.page';
 import { ToolbarModule } from '../components/toolbar/toolbar.module';
+import { FacultadPageModule } from './facultad/facultad.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { ToolbarModule } from '../components/toolbar/toolbar.module';
     FormsModule,
     HomePageRoutingModule,
     ToolbarModule,
+    FacultadPageModule,
   ],
   declarations: [HomePage],
 })

@@ -54,7 +54,21 @@ export class FormPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    switch (this.tipoPublicacion) {
+    this.validateTipoPublicacion(this.tipoPublicacion);
+    this.getLists();
+    this.publicacion = {
+      contacto: {},
+      imagenes: [],
+      tipo_publicacion_id: this.tipoPublicacion,
+      facultad_id: this.facultad.id,
+    };
+  }
+
+  validateTipoPublicacion(tipoPublicacion: TipoPublicacion) {
+    this.isEmpleo = false;
+    this.isServicio = false;
+    this.isProducto = false;
+    switch (tipoPublicacion) {
       case TipoPublicacion.EMPLEO:
         this.isEmpleo = true;
         break;
@@ -67,13 +81,6 @@ export class FormPage implements OnInit {
         this.isServicio = true;
         break;
     }
-    this.getLists();
-    this.publicacion = {
-      contacto: {},
-      imagenes: [],
-      tipo_publicacion_id: this.tipoPublicacion,
-      facultad_id: this.facultad.id,
-    };
   }
 
   private getLists() {
@@ -167,26 +174,26 @@ export class FormPage implements OnInit {
           message: 'Cargando imagen...',
         });
         await loading.present();
+
+        this.publicacionService.uploadImages(files).subscribe({
+          next: async (images) => {
+            if (!this.publicacion.imagenes.length) {
+              this.publicacion.imagenes = [...images];
+            } else {
+              this.publicacion.imagenes.push(...images);
+
+              setTimeout(() => {
+                this.slides.slideTo(this.publicacion.imagenes.length - 1);
+              }, 50);
+            }
+
+            await loading.dismiss();
+          },
+          error: async () => {
+            await loading.dismiss();
+          },
+        });
       }
-
-    this.publicacionService.uploadImages(files).subscribe({
-      next: async (images) => {
-        if (!this.publicacion.imagenes.length) {
-          this.publicacion.imagenes = [...images];
-        } else {
-          this.publicacion.imagenes.push(...images);
-
-          setTimeout(() => {
-            this.slides.slideTo(this.publicacion.imagenes.length - 1);
-          }, 50);
-        }
-
-        await loading.dismiss();
-      },
-      error: async () => {
-        await loading.dismiss();
-      },
-    });
   }
 
   showFullScreenImage(index: number) {

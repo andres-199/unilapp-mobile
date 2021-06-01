@@ -10,16 +10,55 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item-divider sticky>
-      <ion-label color="primary"> {{title}} </ion-label>
-    </ion-item-divider>
+  <ion-item-divider sticky>
+    <ion-label color="primary"> {{title}} </ion-label>
+  </ion-item-divider>
 
+  <ion-list lines="none">
     <ion-item *ngFor="let publicacion of publicaciones">
-      <ion-thumbnail slot="start">
-        <img [src]="env.STORAGE+publicacion?.imagenes[0]?.path" />
+      <ion-thumbnail
+        slot="start"
+        style="height: 7em; width: 7em"
+        (click)="onClickThumbnail(publicacion)"
+      >
+        <img
+          style="object-fit: contain"
+          [src]="env.STORAGE+publicacion?.imagenes[0]?.path"
+          *ngIf="publicacion?.imagenes?.length"
+        />
       </ion-thumbnail>
-      <ion-label> {{publicacion.nombre}} </ion-label>
+      <ion-label class="ion-text-wrap">
+        <h5>{{publicacion.nombre}}</h5>
+        <p *ngIf="publicacion.Finalidad">
+          Disponible para {{publicacion.Finalidad?.nombre}}
+        </p>
+        <p style="margin-top: 1em">
+          <ion-icon
+            name="mail"
+            color="danger"
+            size="small"
+            *ngIf="publicacion.contacto?.email"
+          ></ion-icon>
+          <ion-icon
+            name="call"
+            color="tertiary"
+            size="small"
+            *ngIf="publicacion.contacto?.call"
+          ></ion-icon>
+          <ion-icon
+            name="logo-whatsapp"
+            color="success"
+            size="small"
+            *ngIf="publicacion.contacto?.whatsapp"
+          ></ion-icon>
+          <ion-icon
+            name="logo-facebook"
+            size="small"
+            color="primary"
+            *ngIf="publicacion.contacto?.facebook"
+          ></ion-icon>
+        </p>
+      </ion-label>
     </ion-item>
   </ion-list>
 
@@ -29,3 +68,9 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<ng-image-fullscreen-view
+  [images]="imagenes"
+  [show]="showFullScreen"
+  (close)="showFullScreen=false"
+></ng-image-fullscreen-view>

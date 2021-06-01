@@ -15,6 +15,8 @@ export class PublicacionesPage implements OnInit {
   @Input() title = '';
   @Input() publicaciones: Publicacion[];
   env = environment;
+  showFullScreen = false;
+  private selectedPublicacion: Publicacion = {};
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {}
@@ -43,6 +45,20 @@ export class PublicacionesPage implements OnInit {
       if (data.data) {
         this.publicaciones.push(data.data);
       }
+    });
+  }
+
+  onClickThumbnail(publicacion: Publicacion) {
+    this.selectedPublicacion = publicacion;
+    setTimeout(() => {
+      this.showFullScreen = true;
+    });
+  }
+
+  get imagenes() {
+    return this.selectedPublicacion?.imagenes?.map((imagen) => {
+      imagen['image'] = this.env.STORAGE + imagen.path;
+      return imagen;
     });
   }
 }

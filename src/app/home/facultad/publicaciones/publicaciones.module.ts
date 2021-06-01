@@ -6,9 +6,16 @@ import { IonicModule } from '@ionic/angular';
 
 import { PublicacionesPage } from './publicaciones.page';
 import { FormPageModule } from './form/form.module';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, FormPageModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    FormPageModule,
+    NgImageFullscreenViewModule,
+  ],
   declarations: [PublicacionesPage],
 })
 export class PublicacionesPageModule {}

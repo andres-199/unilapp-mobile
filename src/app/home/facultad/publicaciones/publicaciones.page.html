@@ -15,11 +15,14 @@
   </ion-item-divider>
 
   <ion-list lines="none">
-    <ion-item *ngFor="let publicacion of publicaciones">
+    <ion-item
+      *ngFor="let publicacion of publicaciones"
+      (click)="onClickPublicacion(publicacion)"
+    >
       <ion-thumbnail
         slot="start"
         style="height: 7em; width: 7em"
-        (click)="onClickThumbnail(publicacion)"
+        (click)="onClickThumbnail(publicacion);$event.stopPropagation()"
       >
         <img
           style="object-fit: contain"

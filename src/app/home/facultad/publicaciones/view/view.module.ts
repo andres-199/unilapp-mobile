@@ -4,20 +4,16 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PublicacionesPage } from './publicaciones.page';
-import { FormPageModule } from './form/form.module';
+import { ViewPage } from './view.page';
 import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
-import { ViewPageModule } from './view/view.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FormPageModule,
     NgImageFullscreenViewModule,
-    ViewPageModule,
   ],
-  declarations: [PublicacionesPage],
+  declarations: [ViewPage],
 })
-export class PublicacionesPageModule {}
+export class ViewPageModule {}

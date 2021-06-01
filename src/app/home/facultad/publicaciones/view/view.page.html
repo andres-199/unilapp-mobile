@@ -1,0 +1,83 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="onCLickBackButton()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-slides pager="true">
+      <ion-slide
+        *ngFor="let imagen of publicacion.imagenes;let i=index"
+        (click)="showFullScreenImage(i)"
+      >
+        <div class="img-container">
+          <img [src]="env.STORAGE+imagen.path" />
+        </div>
+      </ion-slide>
+    </ion-slides>
+    <ion-card-header>
+      <ion-card-subtitle *ngIf="publicacion.Finalidad">
+        Disponible para {{publicacion.Finalidad?.nombre}}
+        <ion-chip
+          style="float: right; font-size: 0.8em"
+          color="primary"
+          *ngIf="publicacion.Estado"
+        >
+          <ion-label>{{publicacion.Estado?.nombre}}</ion-label>
+        </ion-chip>
+      </ion-card-subtitle>
+      <ion-card-title> {{publicacion.nombre}} </ion-card-title>
+    </ion-card-header>
+    <ion-card-content> {{publicacion.descripcion}} </ion-card-content>
+    <ion-list lines="none" *ngIf="publicacion.contacto">
+      <ion-item
+        *ngIf="publicacion.contacto.email"
+        detail
+        (click)="onClickEmail(publicacion.contacto.email)"
+      >
+        <ion-icon name="mail" slot="start" color="danger"></ion-icon>
+        <ion-label>{{publicacion.contacto.email}}</ion-label>
+      </ion-item>
+
+      <ion-item
+        *ngIf="publicacion.contacto.call"
+        detail
+        (click)="onClickCall(publicacion.contacto.call)"
+      >
+        <ion-icon name="call" slot="start" color="tertiary"></ion-icon>
+        <ion-label>{{publicacion.contacto.call}}</ion-label>
+      </ion-item>
+
+      <ion-item
+        *ngIf="publicacion.contacto.whatsapp"
+        detail
+        (click)="onClickWhatsapp(publicacion.contacto.whatsapp)"
+      >
+        <ion-icon name="logo-whatsapp" slot="start" color="success"></ion-icon>
+        <ion-label>{{publicacion.contacto.whatsapp}}</ion-label>
+      </ion-item>
+
+      <ion-item
+        *ngIf="publicacion.contacto.facebook"
+        detail
+        (click)="onClickFacebook(publicacion.contacto.facebook)"
+      >
+        <ion-icon name="logo-facebook" slot="start" color="primary"></ion-icon>
+        <ion-label>{{publicacion.contacto.facebook}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>
+
+<ng-image-fullscreen-view
+  [images]="imagenes"
+  [imageIndex]="selectedImageIndex"
+  [show]="showFullScreen"
+  (close)="closeEventHandler()"
+></ng-image-fullscreen-view>

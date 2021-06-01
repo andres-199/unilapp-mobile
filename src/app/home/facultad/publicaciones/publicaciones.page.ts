@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Facultad } from '../facultad.interface';
 import { FormPage, TipoPublicacion } from './form/form.page';
 import { Publicacion } from './publicacion.interface';
+import { ViewPage } from './view/view.page';
 
 @Component({
   selector: 'app-publicaciones',
@@ -60,5 +61,15 @@ export class PublicacionesPage implements OnInit {
       imagen['image'] = this.env.STORAGE + imagen.path;
       return imagen;
     });
+  }
+
+  async onClickPublicacion(publicacion: Publicacion) {
+    const title = this.title.slice(0, -1);
+    const modal = await this.modalController.create({
+      component: ViewPage,
+      componentProps: { publicacion, title },
+    });
+
+    await modal.present();
   }
 }

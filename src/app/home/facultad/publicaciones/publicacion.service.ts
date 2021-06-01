@@ -6,6 +6,7 @@ import { ImageUploadResponse } from 'src/app/interfaces/image-upload-response';
 import { TipoPublicacion } from 'src/app/interfaces/tipo-publicacion.interface';
 import { environment } from 'src/environments/environment';
 import { Facultad } from '../facultad.interface';
+import { Publicacion } from './publicacion.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +52,10 @@ export class PublicacionService {
   get getTipoPublicaciones() {
     const url = environment.BACKEND_URL + 'tipo-publicaciones';
     return this.http.get<TipoPublicacion[]>(url);
+  }
+
+  savePublication(publicacion: Publicacion) {
+    const url = environment.BACKEND_URL + 'publicaciones';
+    return this.http.post<Publicacion>(url, publicacion);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 import { Facultad } from '../facultad.interface';
 import { FormPage, TipoPublicacion } from './form/form.page';
 import { Publicacion } from './publicacion.interface';
@@ -13,6 +14,7 @@ export class PublicacionesPage implements OnInit {
   @Input() facultad: Facultad;
   @Input() title = '';
   @Input() publicaciones: Publicacion[];
+  env = environment;
   constructor(private modalController: ModalController) {}
 
   ngOnInit() {}
@@ -36,5 +38,11 @@ export class PublicacionesPage implements OnInit {
     });
 
     await modal.present();
+
+    modal.onDidDismiss().then((data) => {
+      if (data.data) {
+        this.publicaciones.push(data.data);
+      }
+    });
   }
 }

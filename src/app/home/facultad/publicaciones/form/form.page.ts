@@ -13,6 +13,7 @@ import { Publicacion } from '../publicacion.interface';
 import { PublicacionService } from '../publicacion.service';
 import { TipoPublicacion as TP } from 'src/app/interfaces/tipo-publicacion.interface';
 import { ImageUploadResponse } from 'src/app/interfaces/image-upload-response';
+import { UserService } from 'src/app/login/user.service';
 
 export enum TipoPublicacion {
   EMPLEO = 1,
@@ -48,7 +49,8 @@ export class FormPage implements OnInit {
     private toastController: ToastController,
     private modalController: ModalController,
     private publicacionService: PublicacionService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -100,13 +102,40 @@ export class FormPage implements OnInit {
     });
   }
 
-  onSubmit(form) {
-    console.log(form);
+  async onSubmit(form) {
+    console.log(this.publicacion);
 
     if (form.invalid) {
       this.showMessage('Debe completar el formulario.');
       return false;
     }
+
+    await this.savePublication();
+  }
+
+  private async savePublication() {
+    const loading = await this.loadingController.create({
+      message: 'Publicando...',
+    });
+    await loading.present();
+
+    const user = this.userService.user;
+    this.publicacion.persona_id = user.Persona.id;
+
+    this.publicacionService.savePublication(this.publicacion).subscribe({
+      next: async (publicacion) => {
+        await loading.dismiss();
+        const msg = `${this.title} publicado ✔`;
+        this.showMessage(msg);
+        await this.modalController.dismiss(publicacion);
+      },
+      error: async (e) => {
+        const msg =
+          'Error por favor verifique la información e intente nuevamente.';
+        this.showMessage(msg);
+        await loading.dismiss();
+      },
+    });
   }
 
   private async showMessage(message: string) {

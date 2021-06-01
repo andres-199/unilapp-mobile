@@ -17,9 +17,7 @@
 
     <ion-item *ngFor="let publicacion of publicaciones">
       <ion-thumbnail slot="start">
-        <img
-          src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-        />
+        <img [src]="env.STORAGE+publicacion?.imagenes[0]?.path" />
       </ion-thumbnail>
       <ion-label> {{publicacion.nombre}} </ion-label>
     </ion-item>

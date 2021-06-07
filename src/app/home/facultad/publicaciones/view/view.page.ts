@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { ModalController } from '@ionic/angular';
+import { LoginGuard } from 'src/app/guards/login.guard';
 import { environment } from 'src/environments/environment';
 import { Publicacion } from '../publicacion.interface';
 
@@ -18,10 +19,16 @@ export class ViewPage implements OnInit {
   env = environment;
   constructor(
     private modalController: ModalController,
-    private callNumber: CallNumber
+    private callNumber: CallNumber,
+    private loginGuard: LoginGuard
   ) {}
 
   ngOnInit() {}
+
+  ionViewDidEnter() {
+    const canActivate = this.loginGuard.canActivate();
+    if (!canActivate) this.modalController.dismiss();
+  }
 
   onCLickBackButton() {
     this.modalController.dismiss();

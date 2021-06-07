@@ -14,6 +14,7 @@ import { PublicacionService } from '../publicacion.service';
 import { TipoPublicacion as TP } from 'src/app/interfaces/tipo-publicacion.interface';
 import { ImageUploadResponse } from 'src/app/interfaces/image-upload-response';
 import { UserService } from 'src/app/login/user.service';
+import { LoginGuard } from 'src/app/guards/login.guard';
 
 export enum TipoPublicacion {
   EMPLEO = 1,
@@ -50,7 +51,8 @@ export class FormPage implements OnInit {
     private modalController: ModalController,
     private publicacionService: PublicacionService,
     private loadingController: LoadingController,
-    private userService: UserService
+    private userService: UserService,
+    private loginGuard: LoginGuard
   ) {}
 
   ngOnInit() {
@@ -69,6 +71,10 @@ export class FormPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    const canActivate = this.loginGuard.canActivate();
+
+    if (!canActivate) this.modalController.dismiss();
+
     this.publicacion = this.publicacionEdit || this.publicacion;
   }
 

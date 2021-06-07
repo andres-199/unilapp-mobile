@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { LoginGuard } from 'src/app/guards/login.guard';
 import { environment } from 'src/environments/environment';
 import { Facultad } from '../facultad.interface';
 import { FormPage, TipoPublicacion } from './form/form.page';
@@ -18,7 +19,10 @@ export class PublicacionesPage implements OnInit {
   env = environment;
   showFullScreen = false;
   private selectedPublicacion: Publicacion = {};
-  constructor(private modalController: ModalController) {}
+  constructor(
+    private modalController: ModalController,
+    private loginGuard: LoginGuard
+  ) {}
 
   ngOnInit() {}
 
@@ -27,6 +31,8 @@ export class PublicacionesPage implements OnInit {
   }
 
   async onClickAdd() {
+    const canActivate = this.loginGuard.canActivate();
+    if (!canActivate) return false;
     const title = this.title.slice(0, -1);
     const tipoPublicacion = TipoPublicacion[title.toUpperCase()];
     const facultad = this.facultad;
@@ -64,6 +70,8 @@ export class PublicacionesPage implements OnInit {
   }
 
   async onClickPublicacion(publicacion: Publicacion) {
+    const canActivate = this.loginGuard.canActivate();
+    if (!canActivate) return false;
     const title = this.title.slice(0, -1);
     const modal = await this.modalController.create({
       component: ViewPage,

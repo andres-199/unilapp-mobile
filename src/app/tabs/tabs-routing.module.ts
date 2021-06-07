@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from '../guards/login.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
           import('../publications/publications.module').then(
             (m) => m.PublicationsPageModule
           ),
+        canActivate: [LoginGuard],
       },
       {
         path: 'contact',

@@ -30,6 +30,7 @@ export class FormPage implements OnInit {
   @Input() title = '';
   @Input() tipoPublicacion: TipoPublicacion;
   @Input() facultad: Facultad;
+  @Input() publicacionEdit: Publicacion;
   estados: Estado[] = [];
   finalidades: Finalidad[] = [];
   facultades: Facultad[];
@@ -37,7 +38,6 @@ export class FormPage implements OnInit {
   isEmpleo = false;
   isServicio = false;
   isProducto = false;
-
   publicacion: Publicacion;
 
   selectedImageIndex: number = -1;
@@ -54,14 +54,22 @@ export class FormPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.validateTipoPublicacion(this.tipoPublicacion);
+    this.validateTipoPublicacion(
+      this.tipoPublicacion || this.publicacionEdit?.tipo_publicacion_id
+    );
     this.getLists();
-    this.publicacion = {
+    const publicacion = {
       contacto: {},
       imagenes: [],
       tipo_publicacion_id: this.tipoPublicacion,
       facultad_id: this.facultad?.id,
     };
+
+    this.publicacion = publicacion;
+  }
+
+  ionViewDidEnter() {
+    this.publicacion = this.publicacionEdit || this.publicacion;
   }
 
   validateTipoPublicacion(tipoPublicacion: TipoPublicacion) {
@@ -116,7 +124,30 @@ export class FormPage implements OnInit {
       return false;
     }
 
-    await this.savePublication();
+    if (this.publicacionEdit) await this.updatePublicacion();
+    else await this.savePublication();
+  }
+
+  private async updatePublicacion() {
+    const loading = await this.loadingController.create({
+      message: 'Actualizando...',
+    });
+    await loading.present();
+
+    this.publicacionService.updatePublicacion(this.publicacion).subscribe({
+      next: async (publicacion) => {
+        await loading.dismiss();
+        const msg = `${this.title} Actualizado ✔`;
+        this.showMessage(msg);
+        await this.modalController.dismiss(publicacion);
+      },
+      error: async (e) => {
+        const msg =
+          'Error por favor verifique la información e intente nuevamente.';
+        this.showMessage(msg);
+        await loading.dismiss();
+      },
+    });
   }
 
   private async savePublication() {
@@ -206,7 +237,7 @@ export class FormPage implements OnInit {
   }
 
   get imagenes() {
-    return this.publicacion.imagenes.map((imagen) => {
+    return this.publicacion?.imagenes?.map((imagen) => {
       imagen['image'] = this.env.STORAGE + imagen.path;
       return imagen;
     });

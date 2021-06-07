@@ -58,4 +58,14 @@ export class PublicacionService {
     const url = environment.BACKEND_URL + 'publicaciones';
     return this.http.post<Publicacion>(url, publicacion);
   }
+
+  updatePublicacion(publicacion: Publicacion) {
+    const url = environment.BACKEND_URL + 'publicaciones';
+    return this.http.put<Publicacion>(url, publicacion);
+  }
+
+  deletePublicacion(publicacion: Publicacion) {
+    const url = environment.BACKEND_URL + `publicaciones/${publicacion.id}`;
+    return this.http.delete(url);
+  }
 }

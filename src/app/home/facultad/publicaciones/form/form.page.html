@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Publicar {{title}}</ion-title>
+    <ion-title>{{publicacionEdit?'Editar ':'Publicar '}} {{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +17,7 @@
       <ion-select
         [(ngModel)]="publicacion.facultad_id"
         [interfaceOptions]="{header:'Facultad'}"
-        [disabled]="!!facultad"
+        [disabled]="!!facultad || !!publicacionEdit"
         cancelText="Cancelar"
         name="facultad_id"
         interface="action-sheet"
@@ -41,7 +41,7 @@
       <ion-select
         [(ngModel)]="publicacion.tipo_publicacion_id"
         [interfaceOptions]="{header:'Tipo de Publicación'}"
-        [disabled]="!!tipoPublicacion"
+        [disabled]="!!tipoPublicacion || !!publicacionEdit"
         cancelText="Cancelar"
         name="tipo_publicacion_id"
         required
@@ -225,7 +225,9 @@
       </ion-item>
     </ng-container>
 
-    <ion-button type="submit" expand="block">Publicar</ion-button>
+    <ion-button type="submit" expand="block">
+      {{publicacionEdit?'Actualizar ':'Publicar '}}
+    </ion-button>
   </form>
 </ion-content>
 

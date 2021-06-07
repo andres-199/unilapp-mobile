@@ -60,11 +60,12 @@ export class FormPage implements OnInit {
       contacto: {},
       imagenes: [],
       tipo_publicacion_id: this.tipoPublicacion,
-      facultad_id: this.facultad.id,
+      facultad_id: this.facultad?.id,
     };
   }
 
   validateTipoPublicacion(tipoPublicacion: TipoPublicacion) {
+    if (!tipoPublicacion) return false;
     this.isEmpleo = false;
     this.isServicio = false;
     this.isProducto = false;
@@ -110,8 +111,6 @@ export class FormPage implements OnInit {
   }
 
   async onSubmit(form) {
-    console.log(this.publicacion);
-
     if (form.invalid) {
       this.showMessage('Debe completar el formulario.');
       return false;

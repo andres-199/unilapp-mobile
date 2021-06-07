@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Publicaciones } from '../publications/publicaciones.interface';
 import { Persona } from './interfaces/persona.interface';
 import { Usuario } from './interfaces/usuario.interface';
 
@@ -38,5 +39,11 @@ export class UserService {
   public register(persona: Persona) {
     const url = environment.BACKEND_URL + 'personas';
     return this.http.post(url, persona);
+  }
+
+  get publicaciones$() {
+    const personaI = this.user.Persona.id;
+    const url = environment.BACKEND_URL + `personas/${personaI}/publicaciones`;
+    return this.http.get<Publicaciones>(url);
   }
 }

@@ -2,4 +2,64 @@
   <app-toolbar title="PUBLICACIONES"></app-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true"> </ion-content>
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="publicaciones.Productos?.length">
+    <ion-item-divider sticky>
+      <ion-label color="primary">Productos</ion-label>
+    </ion-item-divider>
+    <ion-list lines="none">
+      <ion-item *ngFor="let publicacion of publicaciones.Productos" detail>
+        <ion-thumbnail slot="start" style="height: 5em; width: 5em">
+          <img
+            style="object-fit: contain"
+            [src]="env.STORAGE+publicacion?.imagenes[0]?.path"
+            *ngIf="publicacion?.imagenes?.length"
+          />
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap"> {{publicacion.nombre}} </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <ng-container *ngIf="publicaciones.Servicios?.length">
+    <ion-item-divider sticky>
+      <ion-label color="primary"> Servicios</ion-label>
+    </ion-item-divider>
+    <ion-list lines="none">
+      <ion-item *ngFor="let publicacion of publicaciones.Servicios" detail>
+        <ion-thumbnail slot="start" style="height: 5em; width: 5em">
+          <img
+            style="object-fit: contain"
+            [src]="env.STORAGE+publicacion?.imagenes[0]?.path"
+            *ngIf="publicacion?.imagenes?.length"
+          />
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap"> {{publicacion.nombre}} </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <ng-container *ngIf="publicaciones.Empleos?.length">
+    <ion-item-divider sticky>
+      <ion-label color="primary">Empleos</ion-label>
+    </ion-item-divider>
+    <ion-list lines="none">
+      <ion-item *ngFor="let publicacion of publicaciones.Empleos" detail>
+        <ion-thumbnail slot="start" style="height: 5em; width: 5em">
+          <img
+            style="object-fit: contain"
+            [src]="env.STORAGE+publicacion?.imagenes[0]?.path"
+            *ngIf="publicacion?.imagenes?.length"
+          />
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap"> {{publicacion.nombre}} </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onClickAdd()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

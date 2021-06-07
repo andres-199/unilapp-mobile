@@ -12,10 +12,7 @@
 <ion-content class="ion-padding-horizontal">
   <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <!--Facultad-->
-    <ion-item
-      class="ion-margin-vertical form"
-      *ngIf="isProducto || isServicio || isEmpleo"
-    >
+    <ion-item class="ion-margin-vertical form">
       <ion-label position="stacked" class="ion-text-wrap"> Facultad </ion-label>
       <ion-select
         [(ngModel)]="publicacion.facultad_id"
@@ -37,10 +34,7 @@
     </ion-item>
 
     <!--Tipo publicación-->
-    <ion-item
-      class="ion-margin-vertical form"
-      *ngIf="isProducto || isServicio || isEmpleo"
-    >
+    <ion-item class="ion-margin-vertical form">
       <ion-label position="stacked" class="ion-text-wrap">
         Tipo de Publicación
       </ion-label>
@@ -53,6 +47,7 @@
         required
         *ngIf="tipoPublicaciones?.length"
         interface="action-sheet"
+        (ngModelChange)="validateTipoPublicacion($event)"
       >
         <ion-select-option
           [value]="tipoPublicacion.id"

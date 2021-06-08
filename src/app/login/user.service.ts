@@ -46,4 +46,21 @@ export class UserService {
     const url = environment.BACKEND_URL + `personas/${personaI}/publicaciones`;
     return this.http.get<Publicaciones>(url);
   }
+
+  sendCode(email: string) {
+    const url = environment.BACKEND_URL + 'auth/send-code';
+    return this.http.post(url, { email });
+  }
+
+  accountRecovery(code) {
+    const url = environment.BACKEND_URL + 'auth/account-recovery';
+    return this.http.post(url, { code });
+  }
+
+  updatePassword(password) {
+    const user = this.user;
+    user.contrasena = password;
+    const url = environment.BACKEND_URL + 'usuarios';
+    return this.http.put(url, user);
+  }
 }

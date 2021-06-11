@@ -14,7 +14,7 @@ export class ForgottenPasswordPage implements OnInit {
   email: string;
   emailSended = false;
   accountRecovered = false;
-  code: number;
+  code: string;
   password: PasswordRegister = {};
   constructor(
     private userService: UserService,
@@ -61,7 +61,7 @@ export class ForgottenPasswordPage implements OnInit {
       });
       await loading.present();
 
-      this.userService.accountRecovery(this.code.toString()).subscribe({
+      this.userService.accountRecovery(this.code).subscribe({
         next: async (user) => {
           await loading.dismiss();
           this.userService.user = user;

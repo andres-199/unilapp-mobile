@@ -60,7 +60,7 @@ export class ViewPage implements OnInit {
   }
 
   onClickWhatsapp(number: string) {
-    window.open('https://api.whatsapp.com/send?phone=' + number);
+    window.open('https://api.whatsapp.com/send?phone=+57' + number);
   }
 
   onClickFacebook(url: string) {

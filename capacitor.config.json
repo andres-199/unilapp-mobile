@@ -1,5 +1,5 @@
 {
-  "appId": "com.unilapp",
+  "appId": "com.app.unilapp",
   "appName": "unilapp",
   "bundledWebRuntime": false,
   "npmClient": "npm",
